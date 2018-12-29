@@ -4,6 +4,10 @@ use Symfony\Component\Routing;
 
 $routes = new Routing\RouteCollection();
 
+$routes->add('procedure', new Routing\Route('/procedure', array(
+    '_controller' => 'App\\Books\\Controller\\defaultController::procedureAction'
+)));
+
 $routes->add('booksEdit', new Routing\Route('/edit/{id}', array(
     'id' => 0,
     '_controller' => 'App\\Books\\Controller\\defaultController::editAction'

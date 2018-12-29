@@ -147,4 +147,14 @@ class Books extends App{
         
     }
     
+    public function callProcedure(){
+        
+        $sql = 'CALL Price()';
+
+        $query = $this->dbQuery($sql);
+
+        return $query->fetch()['SUM(price)'];
+        
+    }
+    
 }

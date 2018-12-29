@@ -22,7 +22,9 @@
   <body>
   
       <header class="container">
-          <h1 class="text-center">Zadanie testowe ITCenter</h1><hr>
+          <h1 class="text-center">Zadanie testowe ITCenter</h1>
+          <span class="btn btn-success procedure">Zwróć wynik procedury</span>
+          <hr>
       </header>    
       
       <section class="container">
@@ -41,10 +43,9 @@
       </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.all.min.js" integrity="sha256-Qfxgn9jULeGAdbaeDjXeIhZB3Ra6NCK3dvjwAG8Y+xU=" crossorigin="anonymous"></script>
+    
     {% block JSBlock %}
         <script>  
             
@@ -89,6 +90,36 @@
                 }
                 return null;
             }
+
+            (function(){
+
+                delegate(document, 'click', '.procedure', function(e){
+                    
+                    sendXMLHttpRequest('/procedure', [], function(){
+
+                        try {
+
+                            var data = JSON.parse(this.responseText);
+
+                            if(data.success){
+
+                                Swal(
+                                  data.result,
+                                  'SELECT SUM(price) FROM books;',
+                                  'success'
+                                );
+
+                            }
+
+                        } catch(e) {
+                            console.log('Error: ' + e);
+                        }
+
+                     }, false);
+                    
+                });
+                
+            })();
 
         </script>
     {% endblock %}

@@ -158,4 +158,16 @@ class defaultController extends App
         
     }
     
+    public function procedureAction()
+    {
+        
+        $books = new Books();
+        
+        return new JsonResponse(array(
+            'success' => true, 
+            'result' => $books->callProcedure(),
+        ));
+        
+    }
+    
 }
