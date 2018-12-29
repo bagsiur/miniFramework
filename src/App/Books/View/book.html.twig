@@ -1,0 +1,137 @@
+{% extends "src/Web/templates/body.html.twig"  %}
+
+{% block pageContent %}
+    
+    <div class="row">
+        <div class="col-lg-12">
+            {% if edited %}
+                <div class="alert alert-success" role="alert">Dane zostały zmienione poprawnie</div>
+            {% endif %}
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{{ template == 'edit' ? '/?id=' ~ book.id : '/' }}" class="btn btn-success">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            </a><br><br>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ template == 'edit' ? 'Informacje o książce' : 'Nowa ksiażka:' }}
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="">
+                        {% if errors %} 
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            {% for item in errors %}
+                                                <li>{{ item.message }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Tytuł</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Title" name="book[name]" value="{{ book.name }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="price">Cena</label>
+                                    <input type="text" class="form-control price-mask" id="price" placeholder="Price" name="book[price]" value="{{ book.price|number_format(2, '.') }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="author">Autor</label>
+                                    <select class="form-control" id="author" name="book[author]">
+                                        <option value="0">Wybierz</option>
+                                        {% for item in authors %}
+                                            <option value="{{ item.id }}" {{ book.author == item.id ? 'selected' }}>{{ item.name }} {{ item.surname }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="publishing_house">Wydawnictwo</label>
+                                    <select class="form-control" id="publishing_house" name="book[publishing_house]">
+                                        <option value="0">Wybierz</option>
+                                        {% for item in publishing_houses %}
+                                            <option value="{{ item.id }}" {{ book.publishing_house == item.id ? 'selected' }}>{{ item.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12"><hr></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="description">Opis</label>
+                                    <textarea id="description" class="form-control" rows="3" name="book[description]" placeholder="Description">{{ book.description }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12"><hr></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input type="submit" value="Zapisz" name="book[add]" class="btn btn-success">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block JSBlock %}
+    
+    {{ parent() }}
+    
+    <script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+    
+    <script>
+        
+        CKEDITOR.replace('description');
+        
+        (function(){
+
+            var inputChange = function(event) {
+                
+                if(this.value.length === 1){
+                    this.value = '0' + this.value;
+                }
+                
+                this.value = parseFloat(this.value.replace(/[^\d]/g,'').replace(/(\d\d?)$/,'.$1')).toFixed(2);
+  
+            };
+            
+            ['change', 'keyup'].forEach(function(entry) {
+                delegate(document, entry, '.price-mask', inputChange);
+            });
+
+        })();
+        
+    </script>
+    
+{% endblock %}

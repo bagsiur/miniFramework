@@ -1,0 +1,20 @@
+{
+    "name": "bagsiur/pr9.andraszyk.lh",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "bagsiur",
+            "email": "radoslaw.andraszyk@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "^4.2",
+        "symfony/routing": "^4.2",
+        "symfony/http-kernel": "^4.2",
+        "twig/twig": "^2.6"
+    }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <meta name="Description" content="Zadanie testowe">
+    <meta name="author" content="Radosław Andraszyk">
+    <meta name="robots" content="">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    {% block CSSBlock %}
+    {% endblock %}
+    
+  </head>
+  <body>
+  
+      <header class="container">
+          <h1 class="text-center">Zadanie testowe ITCenter</h1><hr>
+      </header>    
+      
+      <section class="container">
+          
+        {% block pageContent %}
+        {% endblock %}
+          
+      </section>
+      
+      <footer class="container">  
+          <div class="row">
+              <div class="col-lg-12">
+                  <hr><p class="text-center">Radosław Andraszyk - <a href="http://andraszyk.eu" target="_blank">andraszyk.eu</a></p>
+              </div>
+          </div>
+      </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    {% block JSBlock %}
+        <script>  
+            
+            function delegate(el, evt, sel, handler) {
+                el.addEventListener(evt, function(event) {
+                    var t = event.target;
+                    while (t && t !== this) {
+                        if (t.matches(sel)) {
+                            handler.call(t, event);
+                        }
+                        t = t.parentNode;
+                    }
+                });
+            }
+            
+            function sendXMLHttpRequest(url, data, onload, async = true){
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', url, async);
+                xhr.onload = onload;
+                xhr.send(data);
+
+            }
+            
+            function setCookie(name,value,days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days*24*60*60*1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+            }
+
+            function getCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0;i < ca.length;i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                }
+                return null;
+            }
+
+        </script>
+    {% endblock %}
+    
+  </body>
+</html>
