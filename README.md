@@ -9,6 +9,4 @@ To install the miniFramework, follow these steps:
 5. Make writeable /cache/;
 6. Set db configuration in /src/Config/settings.php
 
-System Demo: http://itcenter.andraszyk.eu/
-
 Good luck!
